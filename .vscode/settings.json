@@ -1,0 +1,28 @@
+{
+  "cmake.configureOnOpen": true,
+  "cmake.generator": "Visual Studio 17 2022",
+  "cmake.defaultVariants": {},
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+  "files.associations": {
+    "gl.h": "c",
+    "gl_integration.h": "c",
+    "glu.h": "c",
+    "renderer.h": "c",
+    "array": "c",
+    "deque": "c",
+    "format": "c",
+    "initializer_list": "c",
+    "list": "c",
+    "queue": "c",
+    "ranges": "c",
+    "regex": "c",
+    "span": "c",
+    "utility": "c",
+    "valarray": "c",
+    "vector": "c",
+    "xhash": "c",
+    "xstring": "c",
+    "xtree": "c",
+    "xutility": "c"
+  }
+}

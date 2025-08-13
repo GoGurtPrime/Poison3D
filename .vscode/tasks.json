@@ -1,0 +1,70 @@
+// .vscode/tasks.json
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      // 1) Windows/host build (example with CMake)
+      "label": "build:windows",
+      "type": "shell",
+      "command": "cmake",
+      "args": [
+        "-S", "${workspaceFolder}",
+        "-B", "${workspaceFolder}/build",
+        "-DCMAKE_BUILD_TYPE=Debug"
+      ],
+      "problemMatcher": "$gcc",
+      "group": "build"
+    },
+    {
+      "label": "build:windows-compile",
+      "type": "shell",
+      "command": "cmake",
+      "args": [
+        "--build", "${workspaceFolder}/build",
+        "--config", "Debug",
+        "-j"
+      ],
+      "problemMatcher": "$gcc",
+      "group": "build"
+    },
+    {
+      // 2) N64 build on Windows (uses your working N64 Makefile)
+      "label": "build:n64",
+      "type": "shell",
+      "command": "libdragon make -f N64Makefile",
+      "args": [],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": "$gcc",
+      "group": "build"
+    },
+    {
+    "label": "build:dreamcast",
+    "type": "process",
+    "command": "wsl.exe",
+    "args": [
+        "bash",
+        "-lc",
+        ". /opt/toolchains/dc/kos/environ.sh && cd /mnt/c/Users/colin/src/poison3d && make -f KosMakefile && cd /opt/toolchains/mkdcdisc && ./builddir/mkdcdisc -e /mnt/c/Users/colin/src/poison3d/main.elf -o main.cdi && cp main.cdi /mnt/c/Users/colin/OneDrive/Desktop/main.cdi"
+    ],
+    "problemMatcher": "$gcc",
+    "group": "build"
+    },
+    {
+      // 4) One-click: build all platforms
+      "label": "build:all",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "build:windows",
+        "build:windows-compile",
+        "build:n64",
+        "build:dreamcast"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
