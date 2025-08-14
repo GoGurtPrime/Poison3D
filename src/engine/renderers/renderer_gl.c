@@ -10,22 +10,13 @@
 
 #include <math.h>
 
-
-static long frames = 0;
-
-void renderer_init(int width, int height) {
-    renderer_common_setup(width, height);
-    
+void renderer_init(int width, int height) 
+{
+    renderer_common_setup(width, height);   
 }
 
-void renderer_render(void) {
-
-
-    // Set some global render modes that we want to apply to all models
-    // glEnable(GL_LIGHTING);
-    // glEnable(GL_NORMALIZE);
-    // glEnable(GL_CULL_FACE);
-
+void renderer_render(void) 
+{
     glPushMatrix();
 
     renderer_common_draw();

@@ -9,6 +9,8 @@ TARGET = main.elf
 OBJS = \
 	src/platforms/platform_kos.o \
 	src/engine/core/engine.o \
+	src/engine/core/camera.o \
+	src/engine/renderers/renderer_common.o \
 	src/engine/renderers/renderer_kgl.o \
 	src/apps/sandbox/main.o
 

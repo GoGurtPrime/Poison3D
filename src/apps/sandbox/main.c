@@ -6,7 +6,7 @@ int main(void) {
     Platform plat = {0};
     
     // printf("Starting platform");
-    if (!platform_init(&plat, "Poison3D Sandbox", 320, 240)) 
+    if (!platform_init(&plat, "Poison3D Sandbox", 640, 480)) 
     {
         // printf("Platform failed to load! Exit 1");
 

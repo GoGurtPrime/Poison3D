@@ -1,171 +1,26 @@
 // renderer_kos.c  (GLdc path)
 #include "renderer.h"
 #include "../core/camera.h"
-
+#include "renderer_common.h"
 #include <kos.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glkos.h>
 #include <math.h>
 
-
-static float t = 0.f;
-static camera_t camera;
-
-static const GLfloat environment_color[] = {0.1f, 0.03f, 0.2f, 1.f};
-
-// Represents diffuse lights, with their position and intensity.
-static const GLfloat light_diffuse[8][4] = {
-    {1.0f, 0.0f, 0.0f, 1.0f},
-    {0.0f, 1.0f, 0.0f, 1.0f},
-    {0.0f, 0.0f, 1.0f, 1.0f},
-    {1.0f, 1.0f, 0.0f, 1.0f},
-    {1.0f, 0.0f, 1.0f, 1.0f},
-    {0.0f, 1.0f, 1.0f, 1.0f},
-    {1.0f, 1.0f, 1.0f, 1.0f},
-    {1.0f, 1.0f, 1.0f, 1.0f},
-};
-
 void renderer_init(int width, int height) 
 {
-    camera.distance = -10.0f;
-    camera.rotation = 0.0f;
-
-    float aspect_ratio = (float)width / (float)height;
-    float near_plane = 1.0f;
-    float far_plane = 50.0f;
-
-    // glMatrixMode(GL_PROJECTION);
-    //glViewport(0, 0, width, height); 
-    // glFrustum(-near_plane*aspect_ratio, near_plane*aspect_ratio, -near_plane, near_plane, near_plane, far_plane);
-    
-    // glMatrixMode(GL_PROJECTION);
-
-    // gluPerspective(90,aspect_ratio,near_plane,far_plane);
-
-    glMatrixMode(GL_MODELVIEW);
-    //glLoadIdentity();
-    camera_transform(&camera);     // should translate Z by -10 for your setup
-
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, environment_color);
-    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-
-    float light_radius = 1.0f;
-
-    for (int i = 0; i < 3; i++)
-    {
-        glEnable(GL_LIGHT0 + i);
-        glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, light_diffuse[i]);
-        glLightf(GL_LIGHT0 + i, GL_LINEAR_ATTENUATION, 2.0f / light_radius);
-        glLightf(GL_LIGHT0 + i, GL_QUADRATIC_ATTENUATION, 1.0f / (light_radius * light_radius));
-    }
-
-    GLfloat mat_diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat_diffuse);
-
-    // Fog and lighting don't appear to make any difference so far.
-    // glFogf(GL_FOG_START, 5);
-    // glFogf(GL_FOG_END, 20);
-    // glFogfv(GL_FOG_COLOR, environment_color);
-    glDisable(GL_BLEND);
-    glClearColor(0.2f, 0.1f, 0.1f, 1.0f);
-    glFrontFace(GL_CCW);        // Some DC stacks historically defaulted differently. :contentReference[oaicite:1]{index=1}
-    //glEnable(GL_DEPTH_TEST);
-    //glDepthFunc(GL_LEQUAL);
-    glDisable(GL_SCISSOR_TEST);
+    renderer_common_setup(width, height);
+    glViewport(0, 0, 640, 480);
 }
 
-void renderer_render(void) {
-    glClearColor(0.2f, 0.1f, 0.1f, 1.0f);
-    glClearDepth(1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glClear(GL_DEPTH_BUFFER_BIT);
-
-    if (camera.rotation >= 360)
-        camera.rotation = 0;
-    else
-        camera.rotation += 5;
-
-    glMatrixMode(GL_MODELVIEW);
-
-    camera_transform(&camera);     // should translate Z by -10 for your setup
-
+void renderer_render(void) 
+{
     glPushMatrix();
 
-    //glRotatef(sinf(t) * 45.0f, 0.0f, 0.0f, 1.0f);
-
-    float size = 0.2f;
-
-    glBegin(GL_TRIANGLES);
-        glColor3f(1.f, .0f, .0f);
-
-        // Front face (Z+)
-        glVertex3f(-size, -size,  size);
-        glVertex3f( size, -size,  size);
-        glVertex3f( size,  size,  size);
-
-        glVertex3f(-size, -size,  size);
-        glVertex3f( size,  size,  size);
-        glVertex3f(-size,  size,  size);
-
-        glColor3f(0.0f, 1.0f, 0.0f);
-
-        // Back face (Z-)
-        glVertex3f( size, -size, -size);
-        glVertex3f(-size, -size, -size);
-        glVertex3f(-size,  size, -size);
-
-        glVertex3f( size, -size, -size);
-        glVertex3f(-size,  size, -size);
-        glVertex3f( size,  size, -size);
-
-        glColor3f(0.0f, 0.0f, 1.0f);
-
-        // Left face (X-)
-        glVertex3f(-size, -size, -size);
-        glVertex3f(-size, -size,  size);
-        glVertex3f(-size,  size,  size);
-
-        glVertex3f(-size, -size, -size);
-        glVertex3f(-size,  size,  size);
-        glVertex3f(-size,  size, -size);
-
-        glColor3f(1.0f, 1.0f, 0.0f);
-
-        // Right face (X+)
-        glVertex3f( size, -size,  size);
-        glVertex3f( size, -size, -size);
-        glVertex3f( size,  size, -size);
-
-        glVertex3f( size, -size,  size);
-        glVertex3f( size,  size, -size);
-        glVertex3f( size,  size,  size);
-
-        glColor3f(1.0f, 0.0f, 1.0f);
-
-        // Top face (Y+)
-        glVertex3f(-size,  size,  size);
-        glVertex3f( size,  size,  size);
-        glVertex3f( size,  size, -size);
-
-        glVertex3f(-size,  size,  size);
-        glVertex3f( size,  size, -size);
-        glVertex3f(-size,  size, -size);
-
-        glColor3f(1.0f, 1.0f, 1.0f);
-
-        // Bottom face (Y-)
-        glVertex3f(-size, -size, -size);
-        glVertex3f( size, -size, -size);
-        glVertex3f( size, -size,  size);
-
-        glVertex3f(-size, -size, -size);
-        glVertex3f( size, -size,  size);
-        glVertex3f(-size, -size,  size);
-    glEnd();
+    renderer_common_draw();
 
     glPopMatrix();
 }
 
 void renderer_shutdown(void) {}
-
