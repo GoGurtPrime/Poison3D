@@ -10,7 +10,9 @@ all: hello.z64
 
 OBJS = \
 	$(BUILD_DIR)/platforms/platform_n64.o \
+	$(BUILD_DIR)/engine/core/camera.o \
 	$(BUILD_DIR)/engine/core/engine.o \
+	$(BUILD_DIR)/engine/renderers/renderer_common.o \
 	$(BUILD_DIR)/engine/renderers/renderer_n64.o \
 	$(BUILD_DIR)/apps/sandbox/main.o
 

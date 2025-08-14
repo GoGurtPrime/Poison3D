@@ -1,15 +1,18 @@
-// renderer_kos.c  (GLdc path)
-#include "renderer.h"
+#include "renderer_common.h"
 #include "../core/camera.h"
-
-#include <kos.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glkos.h>
+#ifdef _WIN32
+    #include <windows.h>  // Must be included before GL on Windows
+    #include <GL/gl.h>
+    #include <GL/GLU.h>
+#else
+    #include <GL/gl.h>
+    #include <GL/glu.h>
+#endif
+#include "../../platforms/platform.h"
 #include <math.h>
 
-
 static float t = 0.f;
+
 static camera_t camera;
 
 static const GLfloat environment_color[] = {0.1f, 0.03f, 0.2f, 1.f};
@@ -26,7 +29,8 @@ static const GLfloat light_diffuse[8][4] = {
     {1.0f, 1.0f, 1.0f, 1.0f},
 };
 
-void renderer_init(int width, int height) 
+
+void renderer_common_setup(int width, int height)
 {
     camera.distance = -10.0f;
     camera.rotation = 0.0f;
@@ -35,22 +39,18 @@ void renderer_init(int width, int height)
     float near_plane = 1.0f;
     float far_plane = 50.0f;
 
-    // glMatrixMode(GL_PROJECTION);
-    //glViewport(0, 0, width, height); 
-    // glFrustum(-near_plane*aspect_ratio, near_plane*aspect_ratio, -near_plane, near_plane, near_plane, far_plane);
-    
-    // glMatrixMode(GL_PROJECTION);
-
-    // gluPerspective(90,aspect_ratio,near_plane,far_plane);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glFrustum(-near_plane*aspect_ratio, near_plane*aspect_ratio, -near_plane, near_plane, near_plane, far_plane);
 
     glMatrixMode(GL_MODELVIEW);
-    //glLoadIdentity();
-    camera_transform(&camera);     // should translate Z by -10 for your setup
+    glLoadIdentity();
+    set_camera_transform(&camera);
 
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, environment_color);
     glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 
-    float light_radius = 1.0f;
+    float light_radius = 10.0f;
 
     for (int i = 0; i < 3; i++)
     {
@@ -63,38 +63,31 @@ void renderer_init(int width, int height)
     GLfloat mat_diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, mat_diffuse);
 
-    // Fog and lighting don't appear to make any difference so far.
     // glFogf(GL_FOG_START, 5);
     // glFogf(GL_FOG_END, 20);
     // glFogfv(GL_FOG_COLOR, environment_color);
-    glDisable(GL_BLEND);
-    glClearColor(0.2f, 0.1f, 0.1f, 1.0f);
-    glFrontFace(GL_CCW);        // Some DC stacks historically defaulted differently. :contentReference[oaicite:1]{index=1}
-    //glEnable(GL_DEPTH_TEST);
-    //glDepthFunc(GL_LEQUAL);
-    glDisable(GL_SCISSOR_TEST);
+    // Set some global render modes that we want to apply to all models
+    // glEnable(GL_LIGHTING);
+    // glEnable(GL_NORMALIZE);
+    // glEnable(GL_DEPTH_TEST);
+    // glEnable(GL_CULL_FACE);
 }
 
-void renderer_render(void) {
-    glClearColor(0.2f, 0.1f, 0.1f, 1.0f);
-    glClearDepth(1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glClear(GL_DEPTH_BUFFER_BIT);
+void renderer_common_draw()
+{
+    t += 10.f * platform_delta_seconds();
 
-    if (camera.rotation >= 360)
-        camera.rotation = 0;
-    else
-        camera.rotation += 5;
+    glClearColor(0.1f, 0.03f, 0.2f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glMatrixMode(GL_MODELVIEW);
+    set_camera_transform(&camera);
 
-    camera_transform(&camera);     // should translate Z by -10 for your setup
+    // TEST CUBE FOR COMMON DRAWING TEST
 
-    glPushMatrix();
+    float size = 2.0f;
 
-    //glRotatef(sinf(t) * 45.0f, 0.0f, 0.0f, 1.0f);
-
-    float size = 0.2f;
+    glRotatef(sinf(t) * 45.0f, 0.0f, 0.0f, 1.0f);
 
     glBegin(GL_TRIANGLES);
         glColor3f(1.f, .0f, .0f);
@@ -163,9 +156,4 @@ void renderer_render(void) {
         glVertex3f( size, -size,  size);
         glVertex3f(-size, -size,  size);
     glEnd();
-
-    glPopMatrix();
 }
-
-void renderer_shutdown(void) {}
-

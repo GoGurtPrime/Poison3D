@@ -46,7 +46,7 @@
     "args": [
         "bash",
         "-lc",
-        ". /opt/toolchains/dc/kos/environ.sh && cd /mnt/c/Users/colin/src/poison3d && make -f KosMakefile && cd /opt/toolchains/mkdcdisc && ./builddir/mkdcdisc -e /mnt/c/Users/colin/src/poison3d/main.elf -o main.cdi && cp main.cdi /mnt/c/Users/colin/OneDrive/Desktop/main.cdi"
+        ". /opt/toolchains/dc/kos/environ.sh && cd /mnt/c/Users/colin/src/poison3d && make clean -f KosMakefile && make -f KosMakefile && cd /opt/toolchains/mkdcdisc && ./builddir/mkdcdisc -e /mnt/c/Users/colin/src/poison3d/main.elf -o main.cdi && cp main.cdi /mnt/c/Users/colin/OneDrive/Desktop/main.cdi"
     ],
     "problemMatcher": "$gcc",
     "group": "build"

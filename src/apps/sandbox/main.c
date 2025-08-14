@@ -6,7 +6,7 @@ int main(void) {
     Platform plat = {0};
     
     // printf("Starting platform");
-    if (!platform_init(&plat, "Poison3D Sandbox", 1024, 576)) 
+    if (!platform_init(&plat, "Poison3D Sandbox", 320, 240)) 
     {
         // printf("Platform failed to load! Exit 1");
 
@@ -18,7 +18,6 @@ int main(void) {
     EngineConfig cfg = { plat.width, plat.height };
     engine_init(&cfg);
 
-    
     // printf("Finished engine init...");
     // printf("Running platform loop");
 

@@ -11,8 +11,10 @@ option(BUILD_DC "Build Dreamcast (delegates to KOS make)" OFF)
 
 # --- Engine core ---
 add_library(engine_core
+  src/engine/core/camera.c
   src/engine/core/engine.c
   src/engine/renderers/renderer_gl.c
+  src/engine/renderers/renderer_common.c
 )
 
 target_include_directories(engine_core PUBLIC

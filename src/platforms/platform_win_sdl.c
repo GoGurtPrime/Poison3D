@@ -1,6 +1,8 @@
 #include "platform.h"
 #include <SDL.h>
 
+Platform* current_platform;
+
 bool platform_init(Platform* p, const char* title, int w, int h) {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER) != 0)
         return false;
@@ -22,8 +24,11 @@ bool platform_init(Platform* p, const char* title, int w, int h) {
 
     p->width = w; p->height = h;
     p->running = true;
-    p->prev = SDL_GetTicks64() / 1000.0;
+    p->prev = SDL_GetTicks64();
     p->now = p->prev;
+
+    current_platform = p;
+
     return true;
 }
 
@@ -33,7 +38,8 @@ void platform_pump(Platform* p) {
         if (e.type == SDL_QUIT) p->running = false;
         if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) p->running = false;
     }
-    p->now = SDL_GetTicks64() / 1000.0;
+    current_platform->prev = current_platform->now;
+    current_platform->now = SDL_GetTicks64();
 }
 
 void platform_swap(Platform* p) {
@@ -46,8 +52,8 @@ void platform_shutdown(Platform* p) {
     SDL_Quit();
 }
 
-float platform_delta_seconds(Platform* p) {
-    float dt = (float)(p->now - p->prev);
-    p->prev = p->now;
+float platform_delta_seconds() {
+    float dt = ((float)current_platform->now - (float)current_platform->prev) / 1000.0f;
+    
     return dt;
 }

@@ -1,5 +1,5 @@
 {
-  "cmake.configureOnOpen": true,
+  "cmake.configureOnOpen": false,
   "cmake.generator": "Visual Studio 17 2022",
   "cmake.defaultVariants": {},
   "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
@@ -23,6 +23,9 @@
     "xhash": "c",
     "xstring": "c",
     "xtree": "c",
-    "xutility": "c"
+    "xutility": "c",
+    "rspq_profile.h": "c",
+    "renderer_common.h": "c",
+    "camera.h": "c"
   }
 }

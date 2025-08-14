@@ -6,9 +6,10 @@
 
 
 bool platform_init(Platform* p, const char* title, int w, int h) {
-    /* Get basic stuff initialized */
-    //glKosInit();
-
+    // TODO: Init for Dreamcast
+    // This would be a decent spot for initializing an input system
+    // or other systems such as audio.
+    glKosInit();
     p->running = true;
 
     return true;
@@ -18,9 +19,8 @@ void platform_pump(Platform* p) {
 }
 
 void platform_swap(Platform* p) {
-    GLenum e; 
-    while ((e = glGetError()) != GL_NO_ERROR) dbglog(DBG_ERROR, "GL error: 0x%04x\n", e);
-
+    // GLdc flush/swap
+    glKosSwapBuffers();            
 }
 
 void platform_shutdown(Platform* p) {

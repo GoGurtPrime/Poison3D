@@ -5,6 +5,8 @@
 #include <libdragon.h>
 #include <rspq_profile.h>
 
+Platform* current_platform;
+
 bool platform_init(Platform* p, const char* title, int w, int h) {
     //console_init();
 
@@ -26,22 +28,27 @@ bool platform_init(Platform* p, const char* title, int w, int h) {
 
     p->running = true;
 
+    current_platform = p;
+
     return true;
 }
 
 void platform_pump(Platform* p) {
+    uint64_t ticks = get_ticks_ms();
+
+    p->prev = p->now;
+    p->now = ticks;
 }
 
 void platform_swap(Platform* p) {
-    //rsqp_wait();
 }
 
 void platform_shutdown(Platform* p) {
     
 }
 
-float platform_delta_seconds(Platform* p) {
-    float dt = (float)(p->now - p->prev);
-    p->prev = p->now;
+float platform_delta_seconds() {
+    float dt = ((float)current_platform->now - (float)current_platform->prev) / 1000.0f;
+
     return dt;
 }
