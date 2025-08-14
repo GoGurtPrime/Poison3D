@@ -19,6 +19,9 @@
 *.exe
 *.out
 *.app
+*.elf
+*.z64
+*.cdi
 
 # Debug files
 *.dSYM/
