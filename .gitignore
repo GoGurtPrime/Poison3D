@@ -30,6 +30,7 @@
 build/
 build-kos/
 out/
+out/windows-vcpkg/
 bin/
 obj/
 
@@ -37,3 +38,4 @@ obj/
 .idea/
 *.swp
 *~
+
