@@ -29,7 +29,7 @@
 # Build directories
 build/
 build-kos/
-/out
+out/
 bin/
 obj/
 
