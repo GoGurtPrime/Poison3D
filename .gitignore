@@ -27,9 +27,9 @@
 *.pdb
 
 # Build directories
-/build/
-/build-kos/
-/out/
+build/
+build-kos/
+out/
 bin/
 obj/
 
