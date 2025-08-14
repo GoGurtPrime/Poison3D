@@ -30,7 +30,7 @@
 build/
 build-kos/
 out/
-out/windows-vcpkg/
+/out/windows-vcpkg/
 bin/
 obj/
 
