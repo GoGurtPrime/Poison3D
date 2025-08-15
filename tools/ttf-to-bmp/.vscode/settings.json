@@ -1,9 +1,11 @@
 {
-  "cmake.configureOnOpen": false,
+  "cmake.configureOnOpen": true,
   "cmake.generator": "Visual Studio 17 2022",
-  "cmake.defaultVariants": {},
+  "cmake.buildDirectory": "${workspaceFolder}/build",
   "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-  "files.associations": {
+  "cmake.configurePreset": "default",
+  "cmake.buildPreset": "default",
+    "files.associations": {
     "gl.h": "c",
     "gl_integration.h": "c",
     "glu.h": "c",

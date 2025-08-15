@@ -1,5 +1,6 @@
 #include "platform.h"
 #include <SDL.h>
+#include "mouse.h"
 
 Platform* current_platform;
 
@@ -34,10 +35,21 @@ bool platform_init(Platform* p, const char* title, int w, int h) {
 
 void platform_pump(Platform* p) {
     SDL_Event e;
-    while (SDL_PollEvent(&e)) {
+    while (SDL_PollEvent(&e)) 
+    {
+        // Causes the main program loop to exit.
         if (e.type == SDL_QUIT) p->running = false;
+    
+        // Exit the program if you hear the ESC key
         if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) p->running = false;
+
+        if (e.type == SDL_MOUSEMOTION)
+        {
+            // Update the mouse position.
+            mouse_set_pos(e.motion.x, e.motion.y);
+        }
     }
+
     current_platform->prev = current_platform->now;
     current_platform->now = SDL_GetTicks64();
 }

@@ -13,6 +13,8 @@ option(BUILD_DC "Build Dreamcast (delegates to KOS make)" OFF)
 add_library(engine_core
   src/engine/core/camera.c
   src/engine/core/engine.c
+  src/engine/core/mouse.c
+  src/engine/core/font.c
   src/engine/renderers/renderer_gl.c
   src/engine/renderers/renderer_common.c
 )
