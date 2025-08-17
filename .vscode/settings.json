@@ -27,6 +27,8 @@
     "rspq_profile.h": "c",
     "renderer_common.h": "c",
     "camera.h": "c",
-    "windows.h": "c"
-  }
+    "windows.h": "c",
+    "filesystem": "c"
+  },
+  "C_Cpp.errorSquiggles": "disabled"
 }

@@ -47,7 +47,6 @@ void draw_quad(float x, float y, float w, float h,
     glEnd();
 }
 
-
 void renderer_common_setup(int width, int height)
 {
     camera.distance = -10.0f;
@@ -224,15 +223,10 @@ void renderer_common_draw()
 
     GLint text_padding = 10;
 
-    glDisable(GL_BLEND);
-
-    glRasterPos2i(250 + text_padding, 125);
-
-    glColor4f(1.f, 0.f, 0.f, 1.f);
-
+    //glColor4f(1.f, 0.f, 0.f, 1.f);
     
-    printString("BUTTON");
-
+    font_print_string("hello world", 15 + text_padding, 125);
+    glDisable(GL_BLEND);
     // Restore
     
     glMatrixMode(GL_MODELVIEW);  glPopMatrix();
