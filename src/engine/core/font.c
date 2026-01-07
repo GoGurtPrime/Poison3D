@@ -6,19 +6,20 @@
 
 #include <GL/gl.h>
 #include <GL/glu.h>
+
 #include <stdlib.h>
 #include <string.h>
-#include "../image-formats/image_format_tga.h"
+#include "../images/image_format_tga.h"
 
-GLuint font_list;
+GLuint font_display_list;
 
-void font_make()
+void load_font()
 {
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-    GLuint i, j, z;
+    GLuint i, j;
 
-    font_list = glGenLists(128);
+    font_display_list = glGenLists(128);
 
     GLubyte *letter;
 
@@ -28,9 +29,11 @@ void font_make()
     {
         char *path = strdup(base_path);
         
-        strcat(strcat(path, &j), ".tga");
+        char *pathAndFile = strcat(path, (char *)&j);
 
-        ImageTga image = image_load_tga(path);
+        char *pathAndFileWithExt = strcat(pathAndFile, ".tga");
+
+        ImageTga image = image_load_tga(pathAndFileWithExt);
         int pixel_count = image.header.height * image.header.width;
         
         letter = malloc(pixel_count * sizeof(GLubyte) * 4);
@@ -45,8 +48,9 @@ void font_make()
             letter[4*m + 3] = image.pixels[m].a;
         }
 
-        glNewList(font_list + j, GL_COMPILE);
-            glDrawPixels(image.header.width, image.header.height, GL_RGBA, GL_UNSIGNED_BYTE, letter);
+        glNewList(font_display_list + j, GL_COMPILE);
+            // Not supported on N64
+            // glDrawPixels(image.header.width, image.header.height, GL_RGBA, GL_UNSIGNED_BYTE, letter);
         glEndList();
 
         free(letter);
@@ -57,13 +61,15 @@ void font_init()
 {
     glShadeModel(GL_FLAT);
 
-    font_make();
+    load_font();
 }
 
 void font_print_string(char *s, int x, int y)
 {
-    glPushAttrib(GL_LIST_BIT);
-    glListBase(font_list);
+    // Not supported on N64
+    // glPushAttrib(GL_LIST_BIT);
+
+    glListBase(font_display_list);
 
     // TODO: Pass this in instead, maybe default in the font?
     int font_spacing = 45;
@@ -73,10 +79,12 @@ void font_print_string(char *s, int x, int y)
         if (s[i] == ' ')
             continue;
 
-        glRasterPos2i(x + (i * font_spacing), y);
+        // Not supported on N64
+        // glRasterPos2i(x + (i * font_spacing), y);
         
         glCallLists(1, GL_UNSIGNED_BYTE, (GLubyte *) &s[i]);
     }
 
-    glPopAttrib();
+    // Not supported on N64
+    // glPopAttrib();
 }

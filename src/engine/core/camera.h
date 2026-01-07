@@ -10,8 +10,8 @@
 #include <GL/glu.h>
 
 typedef struct {
-    float distance;
-    float rotation;
+    float position[3];
+    float rotation[3];
 } camera_t;
 
 void set_camera_transform(const camera_t *camera);

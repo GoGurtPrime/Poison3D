@@ -1,6 +1,6 @@
 #include "platform.h"
 #include <SDL.h>
-#include "mouse.h"
+#include "../engine/input/mouse.h"
 
 Platform* current_platform;
 

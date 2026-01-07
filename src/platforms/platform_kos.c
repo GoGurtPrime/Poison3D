@@ -1,9 +1,9 @@
 #include "platform.h"
 #include <kos.h>
 #include <GL/gl.h>
-#include <GL/glu.h>
 #include <GL/glkos.h>
-
+#include <GL/glu.h>
+#include <GL/glext.h>
 
 bool platform_init(Platform* p, const char* title, int w, int h) {
     // TODO: Init for Dreamcast

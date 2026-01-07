@@ -12,12 +12,21 @@ OBJS = \
 	$(BUILD_DIR)/platforms/platform_n64.o \
 	$(BUILD_DIR)/engine/core/camera.o \
 	$(BUILD_DIR)/engine/core/engine.o \
+	$(BUILD_DIR)/engine/core/font.o \
 	$(BUILD_DIR)/engine/renderers/renderer_common.o \
 	$(BUILD_DIR)/engine/renderers/renderer_n64.o \
 	$(BUILD_DIR)/apps/sandbox/main.o
 
 hello.z64: N64_ROM_TITLE="Hello World"
+
+# Temporarily commenting this out due to a build error
+# hello.z64: $(BUILD_DIR)/hello.dfs
+
 $(BUILD_DIR)/$(TITLE).elf: $(src:%.cpp=$(BUILD_DIR)/%.o)
+
+# Temporarily commenting this out due to a build error
+# $(BUILD_DIR)/hello.dfs: $(wildcard src/assets/*)
+
 $(BUILD_DIR)/hello.elf: $(OBJS)
 
 clean:

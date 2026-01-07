@@ -15,7 +15,8 @@ bool platform_init(Platform* p, const char* title, int w, int h) {
 
     // console_set_debug(true);
     
-    dfs_init(DFS_DEFAULT_LOCATION);
+    // Temporarily removing the filesystem 
+    // dfs_init(DFS_DEFAULT_LOCATION);
     
     display_init(RESOLUTION_320x240, DEPTH_16_BPP, 3, GAMMA_NONE, FILTERS_RESAMPLE_ANTIALIAS_DEDITHER);
     

@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      // 1) Windows/host build (example with CMake)
+      // 1) Windows/host build
       "label": "build:windows",
       "type": "shell",
       "command": "cmake",
@@ -28,7 +28,7 @@
       "group": "build"
     },
     {
-      // 2) N64 build on Windows (uses your working N64 Makefile)
+      // 2) N64 build on Windows
       "label": "build:n64",
       "type": "shell",
       "command": "libdragon make -f N64Makefile",

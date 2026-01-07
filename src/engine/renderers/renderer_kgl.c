@@ -4,8 +4,9 @@
 #include "renderer_common.h"
 #include <kos.h>
 #include <GL/gl.h>
-#include <GL/glu.h>
 #include <GL/glkos.h>
+#include <GL/glu.h>
+#include <GL/glext.h>
 #include <math.h>
 
 void renderer_init(int width, int height) 
