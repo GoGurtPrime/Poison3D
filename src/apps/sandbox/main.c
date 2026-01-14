@@ -1,10 +1,15 @@
 #include "../../platforms/platform.h"
 #include "../../engine/core/engine.h"
 #include <stdio.h>
+#include "../../engine/core/vector3.h"
+#include "../../engine/core/vector4.h"
+#include "../../engine/core/matrix4x4.h"
 
 int main(void) {
     Platform plat = {0};
     
+    Matrix4x4 matrix = matrix_4x4_identity();
+
     // printf("Starting platform");
     if (!platform_init(&plat, "Poison3D Sandbox", 640, 480)) 
     {
