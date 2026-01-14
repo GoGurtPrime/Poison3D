@@ -2,7 +2,7 @@
 #include <stdbool.h>
 
 typedef struct Platform {
-    void* window; // SDL_Window*
+    void* window; // SDL_Window
     void* glctx;  // SDL_GLContext
     int width, height;
     bool running;

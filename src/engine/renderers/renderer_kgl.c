@@ -1,4 +1,3 @@
-// renderer_kos.c  (GLdc path)
 #include "renderer.h"
 #include "../core/camera.h"
 #include "renderer_common.h"

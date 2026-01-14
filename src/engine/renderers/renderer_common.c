@@ -1,5 +1,6 @@
 #include "renderer_common.h"
 #include "../core/camera.h"
+
 #ifdef _WIN32
     #include <windows.h>  // Must be included before GL on Windows
     #include <GL/gl.h>
@@ -8,10 +9,12 @@
     #include <GL/gl.h>
     #include <GL/glu.h>
 #endif
+
 #include "../../platforms/platform.h"
-#include <math.h>
 #include "../core/font.h"
 #include "../input/mouse.h"
+
+#include <math.h>
 
 static float t = 0.f;
 

@@ -1,6 +1,4 @@
 #pragma once
-#ifndef CAMERA_H
-#define CAMERA_H
 
 #ifdef _WIN32
   #include <windows.h>  // Must be included before GL on Windows
@@ -15,5 +13,3 @@ typedef struct {
 } camera_t;
 
 void set_camera_transform(const camera_t *camera);
-
-#endif
