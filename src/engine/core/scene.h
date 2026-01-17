@@ -17,7 +17,8 @@ typedef struct Scene {
     Transform entity_transforms[64];
 
     // Track which entities need their modelview matrix updated
-    int dirty_modelview_indices[64];
+    // Up to 128 entities, each bit is a toggle.
+    uint32_t dirty_modelview_indices[4];
     Matrix4x4 entity_modelviews[64];
     
     // Everything after here is still a WIP, deciding on what features
