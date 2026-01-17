@@ -7,7 +7,7 @@
 
 int main(void) {
     Platform plat = {0};
-    
+
     Matrix4x4 matrix = matrix_4x4_identity();
 
     // printf("Starting platform");

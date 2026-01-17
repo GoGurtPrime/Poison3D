@@ -14,31 +14,31 @@ static inline Vector3 vector3_add(Vector3 vector1, Vector3 vector2) {
     return (Vector3){ 
         .x = vector1.x + vector2.x,
         .y = vector1.y + vector2.y,
-        .z = vector1.z + vector2.z  
+        .z = vector1.z + vector2.z
     };
 }
 
 static inline Vector3 vector3_subtract(Vector3 vector1, Vector3 vector2) {
     return (Vector3) {
         .x = vector1.x - vector2.x,
-        vector1.y - vector2.y,
-        vector1.z - vector2.z
+        .y = vector1.y - vector2.y,
+        .z = vector1.z - vector2.z
     };
 }
 
 static inline Vector3 vector3_multiply(Vector3 vector1, Vector3 vector2) {
     return (Vector3) {
         .x = vector1.x * vector2.x,
-        vector1.y * vector2.y,
-        vector1.z * vector2.z
+        .y = vector1.y * vector2.y,
+        .z = vector1.z * vector2.z
     };
 }
 
 static inline Vector3 vector3_cross(Vector3 vector1, Vector3 vector2) {
     return (Vector3) {
         .x = (vector1.y * vector2.z) - (vector1.z * vector2.y),
-        (vector1.z * vector2.x) - (vector1.x * vector2.z),
-        (vector1.x * vector2.y) - (vector1.y * vector2.x)
+        .y = (vector1.z * vector2.x) - (vector1.x * vector2.z),
+        .z = (vector1.x * vector2.y) - (vector1.y * vector2.x)
     };
 }
 
