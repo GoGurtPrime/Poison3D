@@ -1,34 +1,8 @@
-// .vscode/tasks.json
 {
   "version": "2.0.0",
   "tasks": [
     {
-      // 1) Windows/host build
-      "label": "build:windows",
-      "type": "shell",
-      "command": "cmake",
-      "args": [
-        "-S", "${workspaceFolder}",
-        "-B", "${workspaceFolder}/build",
-        "-DCMAKE_BUILD_TYPE=Debug"
-      ],
-      "problemMatcher": "$gcc",
-      "group": "build"
-    },
-    {
-      "label": "build:windows-compile",
-      "type": "shell",
-      "command": "cmake",
-      "args": [
-        "--build", "${workspaceFolder}/build",
-        "--config", "Debug",
-        "-j"
-      ],
-      "problemMatcher": "$gcc",
-      "group": "build"
-    },
-    {
-      // 2) N64 build on Windows
+      // N64 build (requires libdragon CLI and Docker Desktop)
       "label": "build:n64",
       "type": "shell",
       "command": "libdragon make -f N64Makefile",
@@ -40,55 +14,43 @@
       "group": "build"
     },
     {
-    "label": "build:dreamcast",
-    "type": "process",
-    "command": "wsl.exe",
-    "args": [
-        "bash",
-        "-lc",
-        ". /opt/toolchains/dc/kos/environ.sh && cd ${workspaceFolder} && make clean -f KosMakefile && make -f KosMakefile"
-    ],
-    "problemMatcher": "$gcc",
-    "group": "build"
+      // Dreamcast build using WSL (requires KOS toolchain)
+      "label": "build:dreamcast",
+      "type": "process",
+      "command": "wsl.exe",
+      "args": [
+          "bash",
+          "-lc",
+          ". /opt/toolchains/dc/kos/environ.sh && make clean -f KosMakefile && make -f KosMakefile"
+      ],
+      "problemMatcher": "$gcc",
+      "group": "build"
     },
     {
-    "label": "build:dreamcast-load-ip",
-    "type": "process",
-    "command": "wsl.exe",
-    "args": [
-        "bash",
-        "-lc",
-        ". /opt/toolchains/dc/kos/environ.sh && cd ${workspaceFolder} && /opt/toolchains/dc/bin/dc-tool-ip -x main.elf -t ${input:ipAddress}"
-    ],
-    "problemMatcher": "$gcc",
-    "group": "build"
+      // Send build to Dreamcast over BBA using WSL (requires dcload-ip/dc-tool-ip)
+      "label": "build:dreamcast-load-ip",
+      "type": "process",
+      "command": "wsl.exe",
+      "args": [
+          "bash",
+          "-lc",
+          ". /opt/toolchains/dc/kos/environ.sh && /opt/toolchains/dc/bin/dc-tool-ip -x main.elf -t ${input:ipAddress}"
+      ],
+      "problemMatcher": "$gcc",
+      "group": "build"
     },
     {
+      // Package Dreamcast build into a burnable CDI using WSL (required KOS toolchain)
       "label": "build:dreamcast-cdi",
       "type": "process",
       "command": "wsl.exe",
       "args": [
           "bash",
           "-lc",
-          ". /opt/toolchains/dc/kos/environ.sh && cd /opt/toolchains/mkdcdisc && ./builddir/mkdcdisc -e ${workspaceFolder}/main.elf -o ${workspaceFolder}/main.cdi"
+          ". /opt/toolchains/dc/kos/environ.sh && /opt/toolchains/mkdcdisc/builddir/mkdcdisc -e ./main.elf -o ./main.cdi"
       ],
       "problemMatcher": "$gcc",
       "group": "build"
-    },
-    {
-      // 4) One-click: build all platforms
-      "label": "build:all",
-      "dependsOrder": "sequence",
-      "dependsOn": [
-        "build:windows",
-        "build:windows-compile",
-        "build:n64",
-        "build:dreamcast"
-      ],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
     }
   ],
   "inputs": [
