@@ -46,7 +46,19 @@
     "args": [
         "bash",
         "-lc",
-        ". /opt/toolchains/dc/kos/environ.sh && cd /mnt/c/Users/colin/src/poison3d && make clean -f KosMakefile && make -f KosMakefile"
+        ". /opt/toolchains/dc/kos/environ.sh && cd ${workspaceFolder} && make clean -f KosMakefile && make -f KosMakefile"
+    ],
+    "problemMatcher": "$gcc",
+    "group": "build"
+    },
+    {
+    "label": "build:dreamcast-load-ip",
+    "type": "process",
+    "command": "wsl.exe",
+    "args": [
+        "bash",
+        "-lc",
+        ". /opt/toolchains/dc/kos/environ.sh && cd ${workspaceFolder} && /opt/toolchains/dc/bin/dc-tool-ip -x main.elf -t ${input:ipAddress}"
     ],
     "problemMatcher": "$gcc",
     "group": "build"
@@ -58,7 +70,7 @@
       "args": [
           "bash",
           "-lc",
-          ". /opt/toolchains/dc/kos/environ.sh && cd /opt/toolchains/mkdcdisc && ./builddir/mkdcdisc -e /mnt/c/Users/colin/src/poison3d/main.elf -o main.cdi && cp main.cdi /mnt/c/Users/colin/OneDrive/Desktop/main.cdi"
+          ". /opt/toolchains/dc/kos/environ.sh && cd /opt/toolchains/mkdcdisc && ./builddir/mkdcdisc -e ${workspaceFolder}/main.elf -o ${workspaceFolder}/main.cdi"
       ],
       "problemMatcher": "$gcc",
       "group": "build"
@@ -77,6 +89,14 @@
         "kind": "build",
         "isDefault": true
       }
+    }
+  ],
+  "inputs": [
+    {
+        "id": "ipAddress",
+        "type": "promptString",
+        "description": "What is the IP Address of your Dreamcast?",
+        "default": "0.0.0.0"
     }
   ]
 }
