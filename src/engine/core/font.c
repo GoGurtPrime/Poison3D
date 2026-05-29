@@ -1,15 +1,11 @@
 #include "font.h"
+#include "../images/image_format_tga.h"
 
-#ifdef _WIN32
-    #include <windows.h>  // Must be included before GL on Windows
-#endif
-
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include "gl.h"
 
 #include <stdlib.h>
 #include <string.h>
-#include "../images/image_format_tga.h"
+
 
 GLuint font_display_list;
 

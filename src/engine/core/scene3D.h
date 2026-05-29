@@ -3,7 +3,7 @@
 #include "transform.h"
 #include "matrix4x4.h"
 
-typedef struct Scene {
+typedef struct Scene3D {
     // Identifier for this scene
     int id;
 
