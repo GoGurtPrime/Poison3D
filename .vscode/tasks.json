@@ -2,10 +2,23 @@
   "version": "2.0.0",
   "tasks": [
     {
-      // N64 build (requires libdragon CLI and Docker Desktop)
+      // Windows build (native, via CMake preset)
+      "label": "build:windows",
+      "type": "shell",
+      "command": "cmake --build --preset windows-vcpkg",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      // N64 build (requires libdragon CLI and Docker Desktop).
+      // CMake regenerates generated/n64_sources.mk from CMakeLists.txt,
+      // then delegates the actual ROM build to libdragon's make.
       "label": "build:n64",
       "type": "shell",
-      "command": "libdragon make -f N64Makefile",
+      "command": "cmake --preset n64 && cmake --build --preset n64",
       "args": [],
       "options": {
         "cwd": "${workspaceFolder}"
@@ -14,15 +27,15 @@
       "group": "build"
     },
     {
-      // Dreamcast build using WSL (requires KOS toolchain)
+      // Dreamcast build using WSL (requires KOS toolchain).
+      // CMake regenerates generated/dreamcast_sources.mk from CMakeLists.txt,
+      // then delegates the actual build to KOS's make (via WSL).
       "label": "build:dreamcast",
-      "type": "process",
-      "command": "wsl.exe",
-      "args": [
-          "bash",
-          "-lc",
-          ". /opt/toolchains/dc/kos/environ.sh && make clean -f KosMakefile && make -f KosMakefile"
-      ],
+      "type": "shell",
+      "command": "cmake --preset dreamcast && cmake --build --preset dreamcast",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
       "problemMatcher": "$gcc",
       "group": "build"
     },
@@ -47,7 +60,7 @@
       "args": [
           "bash",
           "-lc",
-          ". /opt/toolchains/dc/kos/environ.sh && /opt/toolchains/mkdcdisc/builddir/mkdcdisc -e ./main.elf -o ./main.cdi"
+          ". /opt/toolchains/dc/kos/environ.sh && /opt/toolchains/mkdcdisc/builddir/mkdcdisc -n poison3d -a colin -D src/apps/sandbox/assets -e ./out/dreamcast/bin/main.elf -o ./out/dreamcast/bin/main.cdi"
       ],
       "problemMatcher": "$gcc",
       "group": "build"

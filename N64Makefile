@@ -1,6 +1,6 @@
 V=1
 SOURCE_DIR=src
-BUILD_DIR=build
+BUILD_DIR=out/n64
 include $(N64_INST)/include/n64.mk
 
 CPPFLAGS += -DPLATFORM_N64=1
@@ -8,24 +8,15 @@ CPPFLAGS += -DPLATFORM_N64=1
 all: hello.z64
 .PHONY: all
 
-OBJS = \
-	$(BUILD_DIR)/platforms/platform_n64.o \
-	$(BUILD_DIR)/engine/core/camera.o \
-	$(BUILD_DIR)/engine/core/engine.o \
-	$(BUILD_DIR)/engine/core/font.o \
-	$(BUILD_DIR)/engine/renderers/renderer_common.o \
-	$(BUILD_DIR)/engine/renderers/renderer_n64.o \
-	$(BUILD_DIR)/apps/sandbox/main.o
+include generated/n64_sources.mk
+
+OBJS = $(patsubst %.c,$(BUILD_DIR)/%.o,$(GEN_N64_SOURCES))
 
 hello.z64: N64_ROM_TITLE="Hello World"
+hello.z64: $(BUILD_DIR)/hello.dfs
 
-# Temporarily commenting this out due to a build error
-# hello.z64: $(BUILD_DIR)/hello.dfs
-
-$(BUILD_DIR)/$(TITLE).elf: $(src:%.cpp=$(BUILD_DIR)/%.o)
-
-# Temporarily commenting this out due to a build error
-# $(BUILD_DIR)/hello.dfs: $(wildcard src/assets/*)
+$(BUILD_DIR)/hello.dfs: src/apps/sandbox/assets/
+$(BUILD_DIR)/hello.dfs: $(shell find src/apps/sandbox/assets -type f)
 
 $(BUILD_DIR)/hello.elf: $(OBJS)
 

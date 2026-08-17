@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run Sandbox",
+      "name": "Windows: Run Sandbox",
       "type": "cppvsdbg",
       "request": "launch",
       "program": "${workspaceFolder}/out/windows-vcpkg/sandbox.exe",
@@ -10,7 +10,50 @@
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "preLaunchTask": "build:windows"
+    },
+    {
+      "name": "N64: Build + Launch in Emulator",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${input:n64EmulatorPath}",
+      "args": ["${workspaceFolder}/hello.z64"],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "console": "integratedTerminal",
+      "preLaunchTask": "build:n64"
+    },
+    {
+      "name": "Dreamcast: Build + Load via dc-tool-ip",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "C:\\Windows\\System32\\wsl.exe",
+      "args": [
+        "bash",
+        "-lc",
+        ". /opt/toolchains/dc/kos/environ.sh && /opt/toolchains/dc/bin/dc-tool-ip -x main.elf -t ${input:dcIpAddress}"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "console": "integratedTerminal",
+      "preLaunchTask": "build:dreamcast"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "n64EmulatorPath",
+      "type": "promptString",
+      "description": "Path to your N64 emulator executable",
+      "default": "ares"
+    },
+    {
+      "id": "dcIpAddress",
+      "type": "promptString",
+      "description": "IP address of your Dreamcast (or dcload-ip-enabled emulator)",
+      "default": "0.0.0.0"
     }
   ]
 }

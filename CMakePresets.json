@@ -17,12 +17,44 @@
         "BUILD_N64": "OFF",
         "BUILD_DC": "OFF"
       }
+    },
+    {
+      "name": "n64",
+      "displayName": "N64 (libdragon via Docker)",
+      "generator": "Visual Studio 18 2026",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/out/n64",
+      "cacheVariables": {
+        "BUILD_WIN_SDL": "OFF",
+        "BUILD_N64": "ON",
+        "BUILD_DC": "OFF"
+      }
+    },
+    {
+      "name": "dreamcast",
+      "displayName": "Dreamcast (KOS via WSL)",
+      "generator": "Visual Studio 18 2026",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/out/dreamcast",
+      "cacheVariables": {
+        "BUILD_WIN_SDL": "OFF",
+        "BUILD_N64": "OFF",
+        "BUILD_DC": "ON"
+      }
     }
   ],
   "buildPresets": [
     {
       "name": "windows-vcpkg",
       "configurePreset": "windows-vcpkg"
+    },
+    {
+      "name": "n64",
+      "configurePreset": "n64"
+    },
+    {
+      "name": "dreamcast",
+      "configurePreset": "dreamcast"
     }
   ]
 }

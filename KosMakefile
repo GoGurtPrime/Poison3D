@@ -1,18 +1,7 @@
-#
-# KallistiGL test program
-# (c)2013-2014 Josh PH3NOM Pearson
-# (c)2001 Megan Potter
-#   
+TARGET = out/dreamcast/bin/main.elf
 
-TARGET = main.elf
-
-OBJS = \
-	src/platforms/platform_kos.o \
-	src/engine/core/engine.o \
-	src/engine/core/camera.o \
-	src/engine/renderers/renderer_common.o \
-	src/engine/renderers/renderer_kgl.o \
-	src/apps/sandbox/main.o
+include generated/dreamcast_sources.mk
+OBJS = $(GEN_DC_SOURCES:.c=.o)
 
 KOS_ROMDISK_DIR = romdisk
 
@@ -27,7 +16,8 @@ rm-elf:
 	-rm -f $(TARGET) romdisk.*
 
 $(TARGET): $(OBJS)
-	kos-cc -o $(TARGET) $(OBJS) -lGL -lpcx -lkosutils
+	mkdir -p $(@D)
+	kos-cc -o $(TARGET) $(OBJS) -lGL -lpcx -lkosutils -lkosfat
 
 run: $(TARGET)
 	$(KOS_LOADER) $(TARGET)
