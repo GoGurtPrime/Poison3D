@@ -33,7 +33,7 @@
       "args": [
         "bash",
         "-lc",
-        ". /opt/toolchains/dc/kos/environ.sh && /opt/toolchains/dc/bin/dc-tool-ip -x main.elf -t ${input:dcIpAddress}"
+        ". /opt/toolchains/dc/kos/environ.sh && /opt/toolchains/dc/bin/dc-tool-ip -x out/dreamcast/bin/main.elf -t ${input:dcIpAddress}"
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
