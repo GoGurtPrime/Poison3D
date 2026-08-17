@@ -17,3 +17,20 @@
     #define FOOTER_ALIGN(n)
     #define INLINE static inline
 #endif
+
+// Platform detection
+#if defined(__N64__) || defined(N64)
+    #define POISON_PLATFORM_N64
+#elif defined(_arch_dreamcast) || defined(__DREAMCAST__)
+    #define POISON_PLATFORM_DREAMCAST
+#elif defined(_WIN32)
+    #define POISON_PLATFORM_WINDOWS
+    #define WIN32_LEAN_AND_MEAN
+    #include <windows.h>
+#elif defined(__APPLE__)
+    #define POISON_PLATFORM_MAC
+    #include <mach-o/dyld.h>
+#elif defined(__linux__)
+    #define POISON_PLATFORM_LINUX
+    #include <unistd.h>
+#endif

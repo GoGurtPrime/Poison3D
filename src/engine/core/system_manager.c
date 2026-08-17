@@ -1,20 +1,39 @@
 #include "system_manager.h"
 
-static short system_count = 1;
-static system_update_callback system_callbacks[64] = {};
+static short update_system_count = 1;
+static short render_system_count = 1;
+static system_update_callback update_system_callbacks[64] = {};
+static system_update_callback render_system_callbacks[64] = {};
 
-void system_register(system_update_callback cb)
+void systemmgr_register_system(system_update_callback cb, SystemType sys_type)
 {
-    if (system_count < 64)
+    if (sys_type == SYS_UPDATE)
     {
-        system_callbacks[system_count - 1] = cb;
+        if (update_system_count < 64)
+        {
+            update_system_callbacks[update_system_count - 1] = cb;
+            update_system_count++;
+        }
+    }
+    else
+    {
+        if (render_system_count < 64)
+        {
+            render_system_callbacks[render_system_count - 1] = cb;
+            render_system_count++;
+        }
     }
 }
 
-void system_update_all()
+void systemmgr_update_all()
 {
-    for (int i = 0; i < system_count; i++)
+    for (int i = 0; i < update_system_count; i++)
     {
-        system_callbacks[i]();
+        update_system_callbacks[i]();
+    }
+
+    for (int i = 0; i < render_system_count; i++)
+    {
+        render_system_callbacks[i]();
     }
 }

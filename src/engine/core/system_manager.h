@@ -2,6 +2,11 @@
 
 typedef void (*system_update_callback)();
 
-void system_register(system_update_callback cb);
+typedef enum {
+    SYS_UPDATE,
+    SYS_RENDER
+} SystemType;
 
-void system_update_all();
+void systemmgr_register_system(system_update_callback cb, SystemType sys_type);
+
+void systemmgr_update_all();

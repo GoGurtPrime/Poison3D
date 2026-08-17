@@ -1,22 +1,14 @@
+#include "compiler.h"
 #include "poison_filesystem.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-// --- Platform Detection Macros ---
-#if defined(__N64__) || defined(N64)
-    #define POISON_PLATFORM_N64
-#elif defined(_arch_dreamcast) || defined(__DREAMCAST__)
-    #define POISON_PLATFORM_DREAMCAST
-#elif defined(_WIN32)
-    #define POISON_PLATFORM_WINDOWS
-    #define WIN32_LEAN_AND_MEAN
+#if defined(POISON_PLATFORM_WINDOWS)
     #include <windows.h>
-#elif defined(__APPLE__)
-    #define POISON_PLATFORM_MAC
+#elif defined(POISON_PLATFORM_MAC)
     #include <mach-o/dyld.h>
-#elif defined(__linux__)
-    #define POISON_PLATFORM_LINUX
+#elif defined(POISON_PLATFORM_LINUX)
     #include <unistd.h>
 #endif
 
