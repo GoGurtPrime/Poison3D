@@ -7,7 +7,8 @@
 
 Platform* current_platform;
 
-bool platform_init(Platform* p, const char* title, int w, int h) {
+bool platform_init(Platform* p, const char* title, int w, int h) 
+{
     //console_init();
 
     // debug_init_isviewer();
@@ -16,7 +17,7 @@ bool platform_init(Platform* p, const char* title, int w, int h) {
     // console_set_debug(true);
     
     // Temporarily removing the filesystem 
-    // dfs_init(DFS_DEFAULT_LOCATION);
+    dfs_init(DFS_DEFAULT_LOCATION);
     
     display_init(RESOLUTION_320x240, DEPTH_16_BPP, 3, GAMMA_NONE, FILTERS_RESAMPLE_ANTIALIAS_DEDITHER);
     
@@ -34,21 +35,25 @@ bool platform_init(Platform* p, const char* title, int w, int h) {
     return true;
 }
 
-void platform_pump(Platform* p) {
+void platform_pump(Platform* p) 
+{
     uint64_t ticks = get_ticks_ms();
 
     p->prev = p->now;
     p->now = ticks;
 }
 
-void platform_swap(Platform* p) {
+void platform_swap(Platform* p) 
+{
 }
 
-void platform_shutdown(Platform* p) {
+void platform_shutdown(Platform* p) 
+{
     
 }
 
-float platform_delta_seconds() {
+float platform_delta_seconds() 
+{
     float dt = ((float)current_platform->now - (float)current_platform->prev) / 1000.0f;
 
     return dt;

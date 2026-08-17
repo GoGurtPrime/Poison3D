@@ -4,7 +4,8 @@
 
 Platform* current_platform;
 
-bool platform_init(Platform* p, const char* title, int w, int h) {
+bool platform_init(Platform* p, const char* title, int w, int h) 
+{
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER) != 0)
         return false;
 
@@ -33,7 +34,8 @@ bool platform_init(Platform* p, const char* title, int w, int h) {
     return true;
 }
 
-void platform_pump(Platform* p) {
+void platform_pump(Platform* p) 
+{
     SDL_Event e;
     while (SDL_PollEvent(&e)) 
     {
@@ -54,17 +56,20 @@ void platform_pump(Platform* p) {
     current_platform->now = SDL_GetTicks64();
 }
 
-void platform_swap(Platform* p) {
+void platform_swap(Platform* p) 
+{
     SDL_GL_SwapWindow((SDL_Window*)p->window);
 }
 
-void platform_shutdown(Platform* p) {
+void platform_shutdown(Platform* p) 
+{
     SDL_GL_DeleteContext(p->glctx);
     SDL_DestroyWindow((SDL_Window*)p->window);
     SDL_Quit();
 }
 
-float platform_delta_seconds() {
+float platform_delta_seconds() 
+{
     float dt = ((float)current_platform->now - (float)current_platform->prev) / 1000.0f;
     
     return dt;

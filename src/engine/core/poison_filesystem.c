@@ -30,7 +30,7 @@ static void get_absolute_asset_path(const char *relative_path, char *out_path, s
 
 #elif defined(POISON_PLATFORM_DREAMCAST)
     // Dreamcast KallistiOS
-    snprintf(out_path, max_len, "/rd/%s", relative_path);
+    snprintf(out_path, max_len, "/cd/%s", relative_path);
 
 #else
     // Desktop platforms: Resolve executable directory first
@@ -39,6 +39,7 @@ static void get_absolute_asset_path(const char *relative_path, char *out_path, s
 
 #if defined(POISON_PLATFORM_WINDOWS)
     GetModuleFileNameA(NULL, exe_dir, sizeof(exe_dir));
+    
     // Strip executable name to get the directory
     char *last_slash = strrchr(exe_dir, '\\');
     if (!last_slash) last_slash = strrchr(exe_dir, '/');
@@ -46,7 +47,9 @@ static void get_absolute_asset_path(const char *relative_path, char *out_path, s
 
 #elif defined(POISON_PLATFORM_LINUX)
     ssize_t count = readlink("/proc/self/exe", exe_dir, sizeof(exe_dir) - 1);
-    if (count > 0) {
+
+    if (count > 0) 
+    {
         exe_dir[count] = '\0';
         char *last_slash = strrchr(exe_dir, '/');
         if (last_slash) *last_slash = '\0';
@@ -54,7 +57,8 @@ static void get_absolute_asset_path(const char *relative_path, char *out_path, s
 
 #elif defined(POISON_PLATFORM_MAC)
     uint32_t size = sizeof(exe_dir);
-    if (_NSGetExecutablePath(exe_dir, &size) == 0) {
+    if (_NSGetExecutablePath(exe_dir, &size) == 0) 
+    {
         char *last_slash = strrchr(exe_dir, '/');
         if (last_slash) *last_slash = '\0';
     }
@@ -66,14 +70,16 @@ static void get_absolute_asset_path(const char *relative_path, char *out_path, s
 #endif
 }
 
-uint8_t *read_asset_bytes(const char *path, size_t *out_size) {
+uint8_t *read_asset_bytes(const char *path, size_t *out_size) 
+{
     if (!path) return NULL;
 
     char full_path[MAX_PATH_LENGTH];
     get_absolute_asset_path(path, full_path, sizeof(full_path));
 
     FILE *file = fopen(full_path, "rb");
-    if (!file) {
+    if (!file) 
+    {
         // Optional: printf("Failed to open file: %s\n", full_path);
         return NULL;
     }
@@ -82,19 +88,22 @@ uint8_t *read_asset_bytes(const char *path, size_t *out_size) {
     long size = ftell(file);
     fseek(file, 0, SEEK_SET);
 
-    if (size < 0) {
+    if (size < 0) 
+    {
         fclose(file);
         return NULL;
     }
 
     uint8_t *buffer = (uint8_t *)malloc((size_t)size + 1);
-    if (!buffer) {
+    if (!buffer) 
+    {
         fclose(file);
         return NULL;
     }
 
     size_t bytes_read = fread(buffer, 1, (size_t)size, file);
-    if (bytes_read != (size_t)size) {
+    if (bytes_read != (size_t)size) 
+    {
         free(buffer);
         fclose(file);
         return NULL;
@@ -102,7 +111,8 @@ uint8_t *read_asset_bytes(const char *path, size_t *out_size) {
 
     buffer[size] = '\0'; 
 
-    if (out_size) {
+    if (out_size) 
+    {
         *out_size = (size_t)size;
     }
 
@@ -110,8 +120,7 @@ uint8_t *read_asset_bytes(const char *path, size_t *out_size) {
     return buffer;
 }
 
-void free_asset_bytes(uint8_t *buffer) {
-    if (buffer) {
-        free(buffer);
-    }
+void free_asset_bytes(uint8_t *buffer) 
+{
+    if (buffer) free(buffer);
 }

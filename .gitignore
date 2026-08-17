@@ -36,6 +36,11 @@ out/
 /out/windows-vcpkg/
 bin/
 obj/
+generated/
+filesystem/
+
+# Filesystem generation for N64
+src/apps/sandbox/filesystem/
 
 # Editor/IDE specific
 .idea/
