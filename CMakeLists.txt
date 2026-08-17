@@ -14,7 +14,7 @@ add_library(engine_core
   src/engine/core/camera.c
   src/engine/core/engine.c
   src/engine/input/mouse.c
-  src/engine/core/font.c
+  src/engine/core/poison_filesystem.c
   src/engine/images/image_format_tga.c
   src/engine/renderers/renderer_gl.c
   src/engine/renderers/renderer_common.c
