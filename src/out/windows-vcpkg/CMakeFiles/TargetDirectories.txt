@@ -1,4 +1,0 @@
-C:/Users/colin/src/poison3d/out/windows-vcpkg/CMakeFiles/engine_core.dir
-C:/Users/colin/src/poison3d/out/windows-vcpkg/CMakeFiles/sandbox.dir
-C:/Users/colin/src/poison3d/out/windows-vcpkg/CMakeFiles/ALL_BUILD.dir
-C:/Users/colin/src/poison3d/out/windows-vcpkg/CMakeFiles/ZERO_CHECK.dir
