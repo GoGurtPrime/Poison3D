@@ -22,7 +22,7 @@ static void get_absolute_asset_path(const char *relative_path, char *out_path, s
 
 #elif defined(POISON_PLATFORM_DREAMCAST)
     // Dreamcast KallistiOS
-    snprintf(out_path, max_len, "/cd/%s", relative_path);
+    snprintf(out_path, max_len, "/pc/%s", relative_path);
 
 #else
     // Desktop platforms: Resolve executable directory first
