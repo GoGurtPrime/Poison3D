@@ -41,9 +41,6 @@ void platform_pump(Platform* p)
     {
         // Causes the main program loop to exit.
         if (e.type == SDL_QUIT) p->running = false;
-    
-        // Exit the program if you hear the ESC key
-        if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) p->running = false;
 
         if (e.type == SDL_MOUSEMOTION)
         {
