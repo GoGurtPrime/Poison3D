@@ -5,7 +5,7 @@
       "name": "Windows: Run Sandbox",
       "type": "cppvsdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/out/windows-vcpkg/sandbox.exe",
+      "program": "${workspaceFolder}/out/windows-vcpkg/Debug/sandbox.exe",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
