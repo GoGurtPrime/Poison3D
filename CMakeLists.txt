@@ -15,6 +15,8 @@ set(ENGINE_COMMON_SOURCES
   src/engine/renderers/renderer_common.c
   src/engine/core/poison_filesystem.c
   src/engine/core/system_manager.c
+  src/engine/core/scene_manager.c
+  src/engine/core/scene.c
 )
 
 # Shared app entry point, every platform

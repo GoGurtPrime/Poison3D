@@ -1,5 +1,6 @@
 #include "renderer_common.h"
 #include "../core/camera.h"
+#include "../core/scene.h"
 #include "../../platforms/platform.h"
 #include "../core/gl.h"
 
@@ -11,17 +12,11 @@ static float t = 0.f;
 // Used by GL Clear Color
 static const GLfloat environment_color[] = {0.03f, 0.03f, 0.03f, 1.f};
 
-static camera_t camera;
+static scene_t* scene;
 
 void renderer_common_setup(int width, int height)
 {
-    camera.position[0] = 0.f;
-    camera.position[1] = 0.f;
-    camera.position[2] = -10.f;
-
-    camera.rotation[0] = 0.f;
-    camera.rotation[1] = 60.f;
-    camera.rotation[2] = 0.f;
+    scene = get_scene();
 
     glClearColor(0.f, 0.f, 0.3f, 1.f);
 
@@ -59,7 +54,7 @@ void renderer_common_draw()
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    set_camera_transform(&camera);
+    set_camera_transform(scene->camera_transform);
 
     float cube_size = 1.f;
 

@@ -1,11 +1,12 @@
 #include "scene_manager.h"
+#include "scene.h"
 
-void initialize()
+void scene_manager_initialize()
 {
-
+    initialize_scene();
 }
 
-void update(float deltaTime)
+void scene_manager_update(float deltaTime)
 {
 
 }

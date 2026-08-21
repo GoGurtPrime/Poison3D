@@ -1,5 +1,5 @@
 #pragma once
 
-void initialize();
+void scene_manager_initialize();
 
-void update(float deltaTime);
+void scene_manager_update(float deltaTime);
