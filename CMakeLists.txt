@@ -15,12 +15,12 @@ set(ENGINE_COMMON_SOURCES
   src/engine/renderers/renderer_common.c
   src/engine/core/poison_filesystem.c
   src/engine/core/system_manager.c
-  src/engine/systems/system_input.c
 )
 
 # Shared app entry point, every platform
 set(APP_COMMON_SOURCES                  
   src/apps/sandbox/main.c
+  src/apps/sandbox/game_input_profile.c
 )
 
 # Win32 specific sources
@@ -28,6 +28,7 @@ set(ENGINE_WIN_SOURCES
   src/engine/input/mouse.c
   src/engine/images/image_format_tga.c
   src/engine/renderers/renderer_gl.c
+  src/engine/systems/system_input_win_sdl.c
 )
 set(APP_WIN_SOURCES
   src/platforms/platform_win_sdl.c
@@ -36,6 +37,7 @@ set(APP_WIN_SOURCES
 # N64 specific sources
 set(ENGINE_N64_SOURCES
   src/engine/renderers/renderer_n64.c
+  src/engine/systems/system_input_n64.c
 )
 set(APP_N64_SOURCES
   src/platforms/platform_n64.c
@@ -44,6 +46,7 @@ set(APP_N64_SOURCES
 # Dreamcast specific sources
 set(ENGINE_DC_SOURCES
   src/engine/renderers/renderer_kgl.c
+  src/engine/systems/system_input_kos.c
 )
 set(APP_DC_SOURCES
   src/platforms/platform_kos.c
@@ -100,9 +103,11 @@ if(BUILD_WIN_SDL)
   find_package(SDL2 QUIET)
   if(SDL2_FOUND AND TARGET SDL2::SDL2)
     target_link_libraries(sandbox PRIVATE SDL2::SDL2)
+    target_link_libraries(engine_core PRIVATE SDL2::SDL2)
   else()
     target_compile_definitions(sandbox PRIVATE SDL_MAIN_HANDLED)
     target_link_libraries(sandbox PRIVATE SDL2)
+    target_link_libraries(engine_core PRIVATE SDL2)
   endif()
 
   find_package(OpenGL REQUIRED)

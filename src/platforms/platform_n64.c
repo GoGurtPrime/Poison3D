@@ -6,6 +6,7 @@
 #include <rspq_profile.h>
 
 Platform* current_platform;
+joypad_inputs_t inputs;
 
 bool platform_init(Platform* p, const char* title, int w, int h) 
 {
@@ -35,9 +36,16 @@ bool platform_init(Platform* p, const char* title, int w, int h)
     return true;
 }
 
+void check_for_quit(Platform* p)
+{
+
+}
+
 void platform_pump(Platform* p) 
 {
     uint64_t ticks = get_ticks_ms();
+
+    joypad_poll();
 
     p->prev = p->now;
     p->now = ticks;
@@ -49,7 +57,7 @@ void platform_swap(Platform* p)
 
 void platform_shutdown(Platform* p) 
 {
-    
+
 }
 
 float platform_delta_seconds() 
