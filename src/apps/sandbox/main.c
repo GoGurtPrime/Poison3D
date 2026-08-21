@@ -2,6 +2,7 @@
 #include "../../platforms/platform.h"
 #include "../../engine/core/engine.h"
 #include "../../engine/core/poison_filesystem.h"
+#include "../../engine/systems/system_input.h"
 
 int test_filesystem() 
 {
@@ -25,7 +26,7 @@ int test_filesystem()
         free_asset_bytes(file_data);
 
         return 0;
-    } 
+    }
 
     printf("ERROR: Failed to load 'test.txt'.\n");
 
@@ -35,7 +36,7 @@ int test_filesystem()
 int main(void) 
 {
     Platform plat = {0};
-
+    
     // printf("Starting platform");
     if (!platform_init(&plat, "Poison3D Sandbox", 640, 480)) 
     {
@@ -44,22 +45,29 @@ int main(void)
         return 1;
     }
 
-    if (test_filesystem() == 0)
-    {
-        EngineConfig cfg = { plat.width, plat.height };
-        engine_init(&cfg);
+    EngineConfig cfg = { plat.width, plat.height };
+    engine_init(&cfg);
 
-        while (plat.running) 
+    ActionValue* reset_action = get_action_value("Reset");
+
+    while (plat.running) 
+    {
+        platform_pump(&plat);
+        engine_update(platform_delta_seconds(&plat));
+
+        // TODO: This is temporary to quit during testing by pressing start or esc key
+        if (reset_action && reset_action->current_value == 1.0f)
         {
-            platform_pump(&plat);
-            engine_update(platform_delta_seconds(&plat));
-            engine_render();
-            platform_swap(&plat);
+            // We don't break because we want engine_render and platform_swap to complete.
+            plat.running = false;
         }
 
-        engine_shutdown();
-        platform_shutdown(&plat);
+        engine_render();
+        platform_swap(&plat);
     }
 
+    engine_shutdown();
+    platform_shutdown(&plat);
+    
     return 0;
 }

@@ -11,6 +11,7 @@ void engine_init(const EngineConfig* cfg)
     
     renderer_init(g_cfg.width, g_cfg.height);
 
+    system_input_init();
     systemmgr_register_system(system_input_update, SYS_UPDATE);
 }
 
