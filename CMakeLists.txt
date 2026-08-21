@@ -17,6 +17,7 @@ set(ENGINE_COMMON_SOURCES
   src/engine/core/system_manager.c
   src/engine/core/scene_manager.c
   src/engine/core/scene.c
+  src/engine/systems/system_camera_ctrl.c
 )
 
 # Shared app entry point, every platform

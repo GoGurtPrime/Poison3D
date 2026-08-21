@@ -3,7 +3,7 @@
 
 static scene_t *scene;
 
-void initialize_scene()
+void scene_initialize()
 {
     scene = malloc(sizeof(scene_t));
     scene->camera_transform = malloc(sizeof(camera_t));

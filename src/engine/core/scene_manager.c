@@ -3,7 +3,7 @@
 
 void scene_manager_initialize()
 {
-    initialize_scene();
+    scene_initialize();
 }
 
 void scene_manager_update(float deltaTime)

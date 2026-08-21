@@ -24,7 +24,7 @@ typedef struct {
     camera_t *camera_transform;
 } scene_t;
 
-void initialize_scene();
+void scene_initialize();
 
 void set_and_load_scene(char* scene_name);
 

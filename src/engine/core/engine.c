@@ -2,6 +2,7 @@
 #include "system_manager.h"
 #include "scene_manager.h"
 #include "../renderers/renderer.h"
+#include "../systems/system_camera_ctrl.h"
 #include "../systems/system_input.h"
 
 static EngineConfig g_cfg;
@@ -14,6 +15,9 @@ void engine_init(const EngineConfig* cfg)
 
     system_input_init();
     systemmgr_register_system(system_input_update, SYS_UPDATE);
+
+    system_camera_ctrl_init();
+    systemmgr_register_system(system_camera_ctrl_update, SYS_UPDATE);
 
     renderer_init(g_cfg.width, g_cfg.height);
 }
